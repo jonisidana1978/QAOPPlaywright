@@ -13,8 +13,6 @@ test('Client App Login', async ({page})=>
         const loginPage = new LoginPage(page);
         loginPage.goTO();
         loginPage.validLogin(username,password);
-
-        
         await page.screenshot({path:'login.png'});
         await page.waitForLoadState('networkidle');
         await page.locator(".card-body b").first().waitFor();
