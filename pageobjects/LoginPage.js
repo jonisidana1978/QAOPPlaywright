@@ -8,6 +8,7 @@ class LoginPage{
     }
 async goTO(){
     await this.page.goto("https://rahulshettyacademy.com/client");
+    //await this.page.goTO("/client");
 }
    async validLogin(username,password){
 
@@ -15,6 +16,7 @@ async goTO(){
         await this.userName.fill(username);
         await this.password.fill(password);
         await this.signInButton.click();
+        await this.page.waitForLoadState('networkidle');
     }
 }
 module.exports ={LoginPage};

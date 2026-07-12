@@ -1,9 +1,11 @@
 // @ts-check
 import { defineConfig } from '@playwright/test';
+import { url } from 'node:inspector';
 
 const config = ({
   testDir: './tests',
   timeout: 40 * 1000,
+  
 
   expect: {
     timeout: 40 * 1000,
