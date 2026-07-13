@@ -10,7 +10,10 @@
   "directories": {
     "test": "tests"
   },
-  "scripts": {},
+  "scripts": {
+    "Smoke": "npx playwright test tests/ClientAppPO.spec.js --project=chromium --headed",
+    "Regression":"npx playwright test"
+  },
   "dependencies": {
     "allure-js-commons": "^3.10.2",
     "charenc": "^0.0.2",

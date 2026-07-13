@@ -1,28 +1,37 @@
 // @ts-check
-import { defineConfig } from '@playwright/test';
-import { url } from 'node:inspector';
+const { defineConfig } = require('@playwright/test');
 
-const config = ({
+module.exports = defineConfig({
   testDir: './tests',
   timeout: 40 * 1000,
-  
 
   expect: {
     timeout: 40 * 1000,
   },
 
-  reporter:[ ['list'],              // Console report
-    ['html'],              // Playwright HTML report
-    ['allure-playwright'] //'html',   // <-- Missing comma here
+  reporter: [
+    ['list'],
+    ['html'],
+    ['allure-playwright'],
   ],
-  use: {
-    browserName: 'chromium',
-    headless :false,
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
-    trace: 'on-first-retry'
-  }
-  
-});
 
-module.exports = config
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        browserName: 'chromium',
+        headless: true,
+        screenshot: 'on',
+        video: 'retain-on-failure',
+        trace: 'on-first-retry',
+      },
+    },
+  ],
+
+  use: {
+    headless: true,
+    screenshot: 'on',
+    video: 'retain-on-failure',
+    trace: 'on-first-retry',
+  },
+});

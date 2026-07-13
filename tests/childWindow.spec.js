@@ -29,7 +29,7 @@ test.only ('child window handle', async ({browser})=>
      const domain = arrayText[1].split(" ")[0]
      console.log(domain);
      await page.locator("#username").type(domain);
-     await page.pause();
+     //await page.pause();
      console.log( await page.locator("#username").textContent());
     
     
