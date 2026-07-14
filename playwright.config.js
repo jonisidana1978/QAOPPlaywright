@@ -19,7 +19,9 @@ module.exports = defineConfig({
     {
       name: 'chromium',
       use: {
+
         baseURL:'https://docs.oracle.com/javase/8/docs/api/',
+
         browserName: 'chromium',
         headless: false,
         screenshot: 'on',
