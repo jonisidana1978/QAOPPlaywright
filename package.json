@@ -12,9 +12,11 @@
   },
   "scripts": {
     "Smoke": "npx playwright test tests/ClientAppPO.spec.js --project=chromium --headed",
-    "Regression":"npx playwright test"
+    "Regression": "npx playwright test",
+    "Frames": "npx playwright test tests/handleFrames.spec.js --project=chromium --headed"
   },
   "dependencies": {
+    "@cucumber/cucumber": "^13.0.0",
     "allure-js-commons": "^3.10.2",
     "charenc": "^0.0.2",
     "crypt": "^0.0.2",
@@ -28,6 +30,8 @@
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.0.1",
     "allure-commandline": "^2.43.0",
-    "allure-playwright": "^3.10.2"
+    "allure-playwright": "^3.10.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
   }
 }
