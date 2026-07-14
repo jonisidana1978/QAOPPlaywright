@@ -14,13 +14,14 @@ module.exports = defineConfig({
     ['html'],
     ['allure-playwright'],
   ],
-
+ 
   projects: [
     {
       name: 'chromium',
       use: {
+        baseURL:'https://docs.oracle.com/javase/8/docs/api/',
         browserName: 'chromium',
-        headless: true,
+        headless: false,
         screenshot: 'on',
         video: 'retain-on-failure',
         trace: 'on-first-retry',
