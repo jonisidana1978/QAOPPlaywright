@@ -12,7 +12,8 @@
   },
   "scripts": {
     "Smoke": "npx playwright test tests/ClientAppPO.spec.js --project=chromium --headed",
-    "Regression": "npx playwright test"
+    "Regression": "npx playwright test",
+    "handleframe":"npx playwright test tests/handleframes.spec.js"
   },
   "dependencies": {
     "allure-js-commons": "^3.10.2",
