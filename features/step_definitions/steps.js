@@ -1,24 +1,20 @@
 const {When,Then,Given} = require('@cucumber/cucumber');
-const { POManager } = require('../..pageobjects/POManager');
-const {test, expect,playwright}= require ('@playwright/test');
+const { POManager } = require('../../pageobjects/POManager');
+const { expect } = require('@playwright/test');
+const { chromium } = require('playwright');
 
-
-Given('alogin to the Ecommerce application with {username} and  {password}', async function (username, password) {
-  // Write code here that turns the phrase above into concrete actions
-    const browser = await playwright.chromium.launch();
-    const context=await browser.newContext();
-    const page =await context.newPage();
-    const poManager = new POManager(page);
-    const loginPage = poManager.getLoginPage();
-    await loginPage.goTO();
-    await loginPage.validLogin(data.username, data.password);
+Given('alogin to the Ecommerce application with {string} and  {string}', async function (username, password) {
+  const browser = await chromium.launch();
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  this.poManager = new POManager(page);
+  const loginPage = this.poManager.getLoginPage();
+  await loginPage.goTO();
+  await loginPage.validLogin(username, password);
 });
 
-
-
-When('Add {string} to Cart', function (string) {
-  // Write code here that turns the phrase above into concrete actions
-  const dashboardPage = poManager.getDashboardPage();
-        await dashboardPage.searchProductAddCart(data.productNames);
-        await dashboardPage.navigateToCart();
+Then('Add {string} to Cart', async function (productName) {
+  this.dashboardPage = this.poManager.getDashboardPage();
+  await this.dashboardPage.searchProductAddCart(productName);
+  await this.dashboardPage.navigateToCart();
 });
