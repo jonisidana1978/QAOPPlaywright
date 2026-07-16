@@ -4,10 +4,12 @@ const { POManager } = require('../pageobjects/POManager');
 
 // Convert the JSON fixture into a JavaScript object.
 const dataSet = JSON.parse(JSON.stringify(require('../utils/placeorderTestData.json')));
- test.describe.configure({mode:"parallel"});
-for (const data of dataSet) {
 
-    test(`Client App Login ${data.productNames}`, async ({ page }) => {
+test.describe('Client App Login Suite', () => {
+    test.describe.configure({ mode: 'parallel' });
+
+    for (const data of dataSet) {
+        test(`Client App Login ${data.productNames}`, async ({ page }) => {
         const poManager = new POManager(page);
         const loginPage = poManager.getLoginPage();
 
@@ -58,6 +60,7 @@ for (const data of dataSet) {
         expect(orderId.includes(orderIdDetails)).toBeTruthy();
     });
 }
+});
 
 customtest.only('Client app for login', async ({ page, testDataForOrder }) => {
     const poManager = new POManager(page);

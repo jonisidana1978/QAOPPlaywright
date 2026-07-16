@@ -20,9 +20,9 @@ class LoginPage {
     /**
      * Alias for goTo to keep the test API simple.
      */
-    async goTO() {
-        await this.goTo();
-    }
+  async goTO() {
+      await this.goTo();
+   }
 
     /**
      * Signs in to the application using the supplied credentials.
