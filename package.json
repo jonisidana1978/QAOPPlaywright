@@ -12,8 +12,8 @@
   },
   "scripts": {
     "Smoke": "npx playwright test tests/ClientAppPO.spec.js --project=chromium --headed",
-    "Regression":"npx playwright test",
-    "handleframe":"npx playwright test tests/handleframes.spec.js"
+    "Regression": "npx playwright test",
+    "handleframe": "npx playwright test tests/handleframes.spec.js"
   },
   "dependencies": {
     "@cucumber/cucumber": "^13.0.0",
@@ -27,6 +27,8 @@
     "undici-types": "^8.3.0"
   },
   "devDependencies": {
+    "@azure/identity": "^4.13.1",
+    "@azure/playwright": "^1.1.6",
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.0.1",
     "allure-commandline": "^2.43.0",
