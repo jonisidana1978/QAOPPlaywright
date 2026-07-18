@@ -26,7 +26,5 @@ test.only ('browser context playwright test', async ({browser})=>
     await chk.uncheck();
     //showing to Neeraj bhai"
     //await expect(chk.isChecked).toBeFalsy();
-        await expect(chk.isChecked).toBeTruthy();
-    
-
+    await expect(chk.isChecked).toBeTruthy();
 });
