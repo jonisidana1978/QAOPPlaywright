@@ -14,7 +14,7 @@ test.only ('browser context playwright test', async ({browser})=>
     const password = page.locator("[type='password']");
     const submitButton=page.locator ("#signInBtn")
     const chk = page.locator("#terms");
-    await page.goto(" npagePractise/");
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     const title = await page.title();
     console.log (title);
     await expect(page).toHaveTitle("LoginPage Practise | Rahul Shetty Academy");
