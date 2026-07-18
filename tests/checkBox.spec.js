@@ -28,7 +28,7 @@ test.only ('browser context playwright test', async ({browser})=>
     //changes in the pallv_fixes branch
     //check for piplerun
     //checking for again and this time i will move to main when everything loks good
-    //phir se
+    //phir se checkin karo 
     //await expect(chk.isChecked).toBeFalsy();
         await expect(chk.isChecked).toBeTruthy();
     
