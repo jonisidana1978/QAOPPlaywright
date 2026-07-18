@@ -24,6 +24,7 @@ test.only ('browser context playwright test', async ({browser})=>
     await chk.click();
     await expect(chk).toBeChecked();
     await chk.uncheck();
+    //testing for azure pipeline
     //await expect(chk.isChecked).toBeFalsy();
         await expect(chk.isChecked).toBeTruthy();
     
