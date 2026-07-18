@@ -27,6 +27,4 @@ test.only ('browser context playwright test', async ({browser})=>
     //showing to Neeraj bhai"
     //await expect(chk.isChecked).toBeFalsy();
     await expect(chk.isChecked).toBeTruthy();
-    
-
 });
