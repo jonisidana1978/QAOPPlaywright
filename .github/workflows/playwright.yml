@@ -23,14 +23,6 @@ jobs:
       env: 
         PLAYWRIGHT_SERVICE_URL: ${{ vars.PLAYWRIGHT_SERVICE_URL }}
       run: npx playwright test --config=playwright.service.config.js --workers=4
-    - name: Upload report to Azure Blob Storage
-      if: ${{ !cancelled() }}
-      run: |
-        az storage blob upload-batch \
-          --account-name pwstrgrrdb610 \
-          --destination "playwright-reports/${{ github.run_id }}" \
-          --source blob-report \
-          --auth-mode login
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
