@@ -23,6 +23,7 @@ class DashboardPage {
                 await this.products.nth(i).locator('text= Add To Cart').click();
                 break;
             }
+            
         }
     }
 
