@@ -33,8 +33,10 @@ module.exports = defineConfig({
 
   use: {
     headless: true,
-    screenshot: 'on',
-    video: 'retain-on-failure',
     trace: 'on-first-retry',
+    video: 'retain-on-failure',
+    screenshot: 'on',
+    
+    
   },
 });

@@ -86,7 +86,7 @@ for (let i=0;i<await rows.count();++i)
         break;
         }
         //console.log(print);
-    await page.pause();
+   // await page.pause();
 
 const OrderIdDetails = await page.locator(".col-text").textContent();
 console.log(OrderIdDetails);
