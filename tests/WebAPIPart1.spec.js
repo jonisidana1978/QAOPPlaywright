@@ -1,79 +1,80 @@
-const { test, expect } = require('@playwright/test');
-const { customtest } = require('../utils/test-base');
-const { POManager } = require('../pageobjects/POManager');
+const {request,test,expect}= require('@playwright/test');
+const url="https://rahulshettyacademy.com/api/ecom/auth/login";
+const orderURL="https://rahulshettyacademy.com/api/ecom/order/create-order";
+const loginPayLoad= {userEmail: "pallavsidana@yahoo.com",
+    userPassword:"Sidana@10"
+};
 
-// Convert the JSON fixture into a JavaScript object.
-const dataSet = JSON.parse(JSON.stringify(require('../utils/placeorderTestData.json')));
+let orderId;
+const OrderPayLoad= {orders:[{country:"Cuba",productOrderedId:"6960eac0c941646b7a8b3e68"}]};
+let token;
+//login API call and get the token and store it in a variable
 
-test.describe('Client App Login Suite', () => {
-    test.describe.configure({ mode: 'parallel' });
 
-    for (const data of dataSet) {
-        test(`Client App Login ${data.productNames}`, async ({ page }) => {
-        const poManager = new POManager(page);
-        const loginPage = poManager.getLoginPage();
-
-        await loginPage.goTO();
-        await loginPage.validLogin(data.username, data.password);
-
-        const dashboardPage = poManager.getDashboardPage();
-        await dashboardPage.searchProductAddCart(data.productNames);
-        await dashboardPage.navigateToCart();
-
-        await page.locator('text=Checkout').click();
-        await page.locator("input[type='text'].input.txt").nth(1).fill('123');
-        await page.locator("input[type='text'].input.txt").nth(2).fill('Pallav Sidana');
-
-        await page.locator("[placeholder*='Country']").pressSequentially('Ind', { delay: 1000 });
-        const dropdown = page.locator('.ta-results');
-        await dropdown.waitFor();
-        const optionCounts = await dropdown.locator('button').count();
-
-        for (let i = 0; i < optionCounts; ++i) {
-            const text = await dropdown.locator('button').nth(i).textContent();
-            if (text === ' India') {
-                await dropdown.locator('button').nth(i).click();
-                break;
-            }
-        }
-
-        await page.locator('.action__submit').click();
-        await expect(page.locator('.hero-primary')).toHaveText(' Thankyou for the order. ');
-
-        const orderId = await page.locator('.em-spacer-1 .ng-star-inserted').textContent();
-        console.log(orderId);
-
-        await page.locator("button[routerlink*='myorders']").click();
-        const rows = page.locator('tbody tr');
-
-        for (let i = 0; i < await rows.count(); ++i) {
-            const rowOrderId = await rows.nth(i).locator('th').textContent();
-            if (orderId.includes(rowOrderId)) {
-                await rows.nth(i).locator('button').first().click();
-                break;
-            }
-        }
-
-        await page.pause();
-        const orderIdDetails = await page.locator('.col-text').textContent();
-        console.log(orderIdDetails);
-        expect(orderId.includes(orderIdDetails)).toBeTruthy();
+test.beforeAll(async () => {
+    const apiContext = await request.newContext();
+    const loginResponse = await apiContext.post(url,{
+        data: loginPayLoad
     });
+    expect(loginResponse.ok()).toBeTruthy();
+    const loginResponseJson = await loginResponse.json();
+    token = loginResponseJson.token;
+    const orderResponse = await apiContext.post(
+       orderURL,
+        {
+            data: OrderPayLoad,
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json"
+            }
+        }
+    );
+
+    const orderResponseJson = await orderResponse.json();
+
+    console.log(orderResponseJson);
+
+    orderId = orderResponseJson.orders[0];
+});
+
+test.beforeEach(async()=>{
+});
+
+test('Place the order', async ({page})=>
+    {
+        await page.addInitScript(value => {
+        window.localStorage.setItem('token', value);
+        }, token);
+        await page.goto("https://rahulshettyacademy.com/client");
+    //click on the order button
+await page.locator("button[routerlink*='myorders']").click();
+//consider the first row scan the order in the table 
+const rows=await page.locator("tbody tr");
+// using for loop traverse the table
+for (let i=0;i<await rows.count();++i)
+{
+    const rowOrderId= await rows.nth(i).locator("th").textContent();
+    if (orderId.includes(rowOrderId))
+        {
+        // to select the view button 
+        await rows.nth(i).locator("button").first().click();
+        //await row.locator("button.btn.btn-primary").click();
+       // await page.locator("tr:has-text"('" + orderId + "'),button.btn.btn-primary).click();
+        break;
+        }
+  const OrderIdDetails = await page.locator(".col-text").textContent();
+//console.log(OrderIdDetails);
+//await page.pause();
+expect(orderId.includes(OrderIdDetails)).toBeTruthy();
 }
+
 });
 
-customtest.only('Client app for login', async ({ page, testDataForOrder }) => {
-    const poManager = new POManager(page);
-    const loginPage = poManager.getLoginPage();
+test.afterAll(async()=>{
+   // context.close();
+    //page.close();
+})
 
-    await loginPage.goTO();
-    await loginPage.validLogin(testDataForOrder.username, testDataForOrder.password);
 
-    const dashboardPage = poManager.getDashboardPage();
-    await dashboardPage.searchProductAddCart(testDataForOrder.productNames);
-    await dashboardPage.navigateToCart();
-
-    await page.locator('text=Checkout').click();
-    await page.locator("input[type='text'].input.txt").nth(1).fill('123');
-    console.log(await page.locator("input[type='text'].input.txt").nth(1).inputValue());
-});
+//verify if the order created is present in the order history page
+//precondition: create order
