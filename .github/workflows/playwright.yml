@@ -22,7 +22,7 @@ jobs:
     - name: Run Playwright tests
       env: 
         PLAYWRIGHT_SERVICE_URL: ${{ vars.PLAYWRIGHT_SERVICE_URL }}
-      run: npx cucumber-js --tags "@Regression" --retry 1 --parallel 2 --exit --format html:cucumer-report.html --config=playwright.service.config.js --workers=4
+      run: run: npx cucumber-js --tags "@Regression" --retry 1 --parallel 2 --exit --format html:cucumer-report.html --config=playwright.service.config.js
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
