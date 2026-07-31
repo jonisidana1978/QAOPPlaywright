@@ -33,7 +33,7 @@ class LoginPage {
         await this.userName.fill(username);
         await this.password.fill(password);
         await this.signInButton.click();
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForNavigation({ waitUntil: 'networkidle', timeout: 30000 });
     }
 }
 

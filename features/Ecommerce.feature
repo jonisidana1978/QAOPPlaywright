@@ -1,6 +1,18 @@
 Feature: Ecommerce validations
-
-  Scenario: Placing the order
-    Given   alogin to the Ecommerce application with "pallavsidana@yahoo.com" and  "Sidana@10"
+@Regression 
+Scenario Outline: Placing the order
+    Given   a login to the Ecommerce application with "<username>" and  "<password>"
     Then Add "ZARA COAT 3" to Cart
     
+    Examples:
+        | username | password |
+        | pallavsidana@yahoo.com | Sidana@10 |
+  
+  Scenario Outline: Placing the order
+    Given   a login to the Ecommerce application with "<username>" and  "<password>"
+    Then Add "ZARA COAT 3" to Cart
+    
+    Examples:
+        | username | password |
+        | pallavsidana@yahoo.com | Sidana@10 |
+     

@@ -4,7 +4,8 @@ const { defineConfig } = require('@playwright/test');
 module.exports = defineConfig({
   testDir: './tests',
   timeout: 40 * 1000,
-
+  workers: 2,
+  retries : 2,
   expect: {
     timeout: 40 * 1000,
   },
@@ -26,7 +27,7 @@ module.exports = defineConfig({
         headless: false,
         screenshot: 'on',
         video: 'retain-on-failure',
-        trace: 'on-first-retry',
+        trace: 'on',
       },
     },
   ],
